@@ -1,8 +1,69 @@
-# React + Vite
+# Projeto de Carrinho customizável
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este é um projeto React configurado com Vite.
 
-Currently, two official plugins are available:
+## Estrutura do Projeto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```
+public/
+	car.glb
+
+src/
+	App.css
+
+	App.jsx
+
+	assets/
+		A.jsx
+
+	components/
+		Modelo.jsx
+
+	index.css
+
+	main.jsx
+
+```
+
+## Scripts Disponíveis
+
+No diretório do projeto, você pode executar:
+
+### `npm run dev`
+
+Inicia o servidor de desenvolvimento.
+
+### `npm run build`
+
+Compila o projeto para produção.
+
+### `npm run lint`
+
+Executa o linter para verificar problemas no código.
+
+### `npm run preview`
+
+Visualiza a versão de produção do projeto.
+
+## Dependências
+
+- `react`: ^18.3.1
+- `react-dom`: ^18.3.1
+- `three`: ^0.169.0
+
+## Dependências de Desenvolvimento
+
+- `@eslint/js`: ^9.13.0
+- `@types/react`: ^18.3.11
+- `@types/react-dom`: ^18.3.1
+- `@vitejs/plugin-react`: ^4.3.3
+- `eslint`: ^9.13.0
+- `eslint-plugin-react`: ^7.37.1
+- `eslint-plugin-react-hooks`: ^5.0.0
+- `eslint-plugin-react-refresh`: ^0.4.13
+- `globals`: ^15.11.0
+- `vite`: ^5.4.9
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT.
