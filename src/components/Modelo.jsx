@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
+import HdriPath from '../assets/hdri.hdr';
 
 
 const GLBViewer = ({ modelo, scale }) => {
@@ -24,20 +25,19 @@ const GLBViewer = ({ modelo, scale }) => {
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ alpha: true });
     renderer.setClearColor(0x000000, 0); // Fundo transparente
-
-    // Adicionar o renderizador ao DOM
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.outputEncoding = THREE.sRGBEncoding;
     mountRef.current.appendChild(renderer.domElement);
 
-    const { clientWidth, clientHeight } = mountRef.current;
-    renderer.setSize(clientWidth, clientHeight);
-
-    // Adicionar controles de câmera
     const controls = new OrbitControls(camera, renderer.domElement);
+    camera.position.set(20, 15, 20);
 
-    // Adicionar luz à cena
-    const light = new THREE.DirectionalLight(0xffffff, 3);
-    light.position.set(1, 1, 1).normalize();
-    scene.add(light);
+    // Carregar o HDRI como ambiente
+    new RGBELoader().load(HdriPath, (texture) => {
+      texture.mapping = THREE.EquirectangularReflectionMapping;
+      scene.background = texture;
+      scene.environment = texture;
+    });
 
     // Carregar o modelo GLB
     const loader = new GLTFLoader();
