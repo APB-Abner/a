@@ -9,7 +9,7 @@ export default function App() {
 
   return (
     <>
-      <Modelo modelo='car.glb' scale='.5' />
+      <Modelo modelo='ca.glb' scale='.5' />
     </>
   )
 }
