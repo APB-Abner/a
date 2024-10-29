@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
+
 
 const GLBViewer = ({ modelo, scale }) => {
   const mountRef = useRef(null); // Referência para o DOM onde será renderizada a cena
@@ -12,8 +15,8 @@ const GLBViewer = ({ modelo, scale }) => {
   const [paintMaterial, setPaintMaterial] = useState('metálico'); // Tipo de Material de Tinta
   const [decalTexture, setDecalTexture] = useState(null); // Decalque
 
-  let carBody = null; // Variável para armazenar a carroceria do carro
-  let carDecal = null; // Variável para armazenar o decalque do carro
+  const carBodyRef = useRef(null); // Referência para armazenar a carroceria do carro
+  const carDecalRef = useRef(null); // Referência para armazenar o decalque do carro
 
   useEffect(() => {
     // Configurar cena, câmera e renderizador
@@ -45,12 +48,12 @@ const GLBViewer = ({ modelo, scale }) => {
       // Percorre cada parte do modelo para identificar carroceria e decalque
       model.traverse((child) => {
         if (child.isMesh) {
-          if (child.name === 'CarBody') {  // Identifique o nome da carroceria (ajuste para o nome real)
-            carBody = child;
-            carBody.material = new THREE.MeshStandardMaterial({ color: primaryColor });
+          if (child.name === 'Formula_E_Gen_3_Model_Scaled_1-32_1') {  // Identifique o nome da carroceria (ajuste para o nome real)
+            carBodyRef.current = child;
+            carBodyRef.current.material = new THREE.MeshStandardMaterial({ color: primaryColor });
           } else if (child.name === 'Decal') {  // Identifique o nome do decalque (ajuste para o nome real)
-            carDecal = child;
-            carDecal.material = new THREE.MeshBasicMaterial({
+            carDecalRef.current = child;
+            carDecalRef.current.material = new THREE.MeshBasicMaterial({
               map: decalTexture,
               color: decalColor,
               transparent: true,
@@ -95,30 +98,30 @@ const GLBViewer = ({ modelo, scale }) => {
 
   // Função para aplicar as personalizações no carro
   const applyCustomizations = () => {
-    if (carBody) {
+    if (carBodyRef.current) {
       // Aplicar cor primária e material
-      carBody.material.color.set(primaryColor);
+      carBodyRef.current.material.color.set(primaryColor);
       switch (paintMaterial) {
         case 'metálico':
-          carBody.material.metalness = 1;
-          carBody.material.roughness = 0.2;
+          carBodyRef.current.material.metalness = 1;
+          carBodyRef.current.material.roughness = 0.2;
           break;
         case 'fosco':
-          carBody.material.metalness = 0;
-          carBody.material.roughness = 1;
+          carBodyRef.current.material.metalness = 0;
+          carBodyRef.current.material.roughness = 1;
           break;
         case 'perolado':
-          carBody.material.metalness = 0.3;
-          carBody.material.roughness = 0.3;
+          carBodyRef.current.material.metalness = 0.3;
+          carBodyRef.current.material.roughness = 0.3;
           break;
         default:
-          carBody.material.metalness = 0.5;
-          carBody.material.roughness = 0.5;
+          carBodyRef.current.material.metalness = 0.5;
+          carBodyRef.current.material.roughness = 0.5;
       }
     }
-    if (carDecal && decalTexture) {
-      carDecal.material.map = decalTexture;
-      carDecal.material.color.set(decalColor);
+    if (carDecalRef.current && decalTexture) {
+      carDecalRef.current.material.map = decalTexture;
+      carDecalRef.current.material.color.set(decalColor);
     }
   };
 
@@ -159,6 +162,10 @@ const GLBViewer = ({ modelo, scale }) => {
       </div>
     </div>
   );
+};
+GLBViewer.propTypes = {
+  modelo: PropTypes.string.isRequired,
+  scale: PropTypes.number.isRequired,
 };
 
 export default GLBViewer;

@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import * as THREE from 'three'
 import Modelo from './components/Modelo'
 import './App.css'
 
