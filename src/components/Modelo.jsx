@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -24,7 +24,7 @@ const GLBViewer = ({ modelo, scale }) => {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ alpha: true });
-    renderer.setClearColor(0x000000, 0); // Fundo transparente
+    const back = new renderer.setClearColor(0x000000, 0); // Fundo transparente
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.outputEncoding = THREE.sRGBEncoding;
     mountRef.current.appendChild(renderer.domElement);
@@ -35,7 +35,7 @@ const GLBViewer = ({ modelo, scale }) => {
     // Carregar o HDRI como ambiente
     new RGBELoader().load(HdriPath, (texture) => {
       texture.mapping = THREE.EquirectangularReflectionMapping;
-      scene.background = texture;
+      scene.background = back;
       scene.environment = texture;
     });
 
@@ -94,7 +94,7 @@ const GLBViewer = ({ modelo, scale }) => {
         mountRef.current.removeChild(renderer.domElement);
       }
     };
-  }, [modelo, scale]);
+  }, [modelo, scale, HdriPath]);
 
   // Função para aplicar as personalizações no carro
   const applyCustomizations = () => {
@@ -143,8 +143,8 @@ const GLBViewer = ({ modelo, scale }) => {
         <label>Cor Primária:</label>
         <input type="color" value={primaryColor} onChange={(e) => setPrimaryColor(e.target.value)} />
 
-        <label>Cor do Decalque:</label>
-        <input type="color" value={decalColor} onChange={(e) => setDecalColor(e.target.value)} />
+        {/* <label>Cor do Decalque:</label>
+        <input type="color" value={decalColor} onChange={(e) => setDecalColor(e.target.value)} /> */}
 
         <label>Tipo de Material de Tinta:</label>
         <select value={paintMaterial} onChange={(e) => setPaintMaterial(e.target.value)}>
@@ -153,12 +153,15 @@ const GLBViewer = ({ modelo, scale }) => {
           <option value="perolado">Perolado</option>
         </select>
 
-        <label>Decalque:</label>
+        {/* <label>Decalque:</label>
         <select onChange={handleDecalChange}>
           <option value="">Nenhum</option>
-          <option value="decal1.jpg">Decalque 1</option>
-          <option value="decal2.jpg">Decalque 2</option>
-        </select>
+          <option value="/public/Animus GP/Animus GP Aquiline/body_focaccia_d.png">Decalque 1</option>
+          <option value="/public/Animus GP/Animus GP Feral/body_focaccia_d.png">Decalque 2</option>
+          <option value="/public/Animus GP/Animus GP L-ITA 99/body_focaccia_d.png">Decalque 3</option>
+          <option value="/public/Animus GP/Animus GP Monza/body_focaccia_d.png">Decalque 4</option>
+          <option value="/public/Animus GP/Animus GP Necro/body_focaccia_d.png">Decalque 5</option>
+        </select> */}
       </div>
     </div>
   );
@@ -169,3 +172,5 @@ GLBViewer.propTypes = {
 };
 
 export default GLBViewer;
+
+

@@ -1,11 +1,10 @@
 import Modelo from './components/Modelo'
-import './App.css'
 
 export default function App() {
 
   return (
     <>
-      <Modelo modelo='ca.glb' scale='.5' />
+      <Modelo modelo='c.glb' scale='.5' />
     </>
   )
 }
