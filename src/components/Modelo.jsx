@@ -4,7 +4,8 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
-import HdriPath from '../assets/hdri.hdr';
+import HdriPath from '../assets/hdri.jpg';
+// import HdriPath from '../assets/hdri.hdr';
 
 
 const GLBViewer = ({ modelo, scale }) => {
